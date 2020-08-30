@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Button } from 'react-native';
 import { useNavigation, useLinkProps } from '@react-navigation/native';
 
+import {ListItem} from './ListItem'
 
 export const HomePage = (props) => {
   const [ data, setData ] = useState(props.data)
@@ -9,7 +10,6 @@ export const HomePage = (props) => {
 
   const handleClick = (item) => {
     navigation.navigate("Detail",item)
-    console.log(item)
   }
 
   const renderList = ({item}) =>  (
@@ -29,30 +29,12 @@ export const HomePage = (props) => {
   )
 }
 
-const ListItem = (props) => {
-  return (
-    <TouchableOpacity onPress={()=>{props.handler(props.item)}}>
-      <View style={homeStyles.item}>
-        <Text>
-          {props.id} 
-        </Text>
-        <Text>
-          $ {props.amount}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  )
-}
+
 
 const homeStyles = StyleSheet.create({
   view: {
     flex: 1,
     justifyContent: 'center',
-  },
-  item: {
-    paddingVertical: 10,
-    borderBottomColor: '#cccccc',
-    flexDirection:'row',
-    justifyContent:'space-between',
+    backgroundColor: 'lightblue',
   },
 })

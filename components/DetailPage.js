@@ -3,11 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export const DetailPage = (props) => {
   return (
-    <View >
+    <View style={detailStyles.detail}>
+      <Text style={detailStyles.amount}>$ {props.route.params.amount}</Text>
+      <Text style={detailStyles.text}>{props.route.params.note}</Text>
       <Text>id: {props.route.params.id}</Text>
-      <Text>amount: {props.route.params.amount}</Text>
+      
       <Text>category: {props.route.params.category}</Text>
-      <Text>note: {props.route.params.note}</Text>
+      
     </View>
   )
 }
@@ -15,5 +17,14 @@ export const DetailPage = (props) => {
 const detailStyles = StyleSheet.create({
   detail: {
     flex: 1,
-  }
+    backgroundColor: 'lightblue',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  amount: {
+    fontSize: 32,
+  },
+  text: {
+    fontSize: 24,
+  },
 })

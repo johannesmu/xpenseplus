@@ -8,7 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {HomePage} from './components/HomePage';
 import {DetailPage} from './components/DetailPage';
 
-// import data
+
 const Data = [
 {
   "amount": 50,
