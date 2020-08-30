@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 const dayNames = [
-  'Monday','Tuesday','Wednesday', 'Thursday', 'Friday',
+  'Sunday','Monday','Tuesday','Wednesday', 'Thursday', 'Friday','Saturday'
 ]
 
 const monthNames = [
@@ -12,7 +12,7 @@ const monthNames = [
 
 export const DateFormat = ( props ) => {
   const formatDate = (tstamp) => {
-    const dateObj = new Date(tstamp)
+    let dateObj = new Date(parseInt(tstamp))
     // get the number of the day
     const day = dayNames[ dateObj.getDay() ]
     // get the date number
@@ -21,8 +21,14 @@ export const DateFormat = ( props ) => {
     const month = monthNames[ dateObj.getMonth() ]
     // get the year number
     const year = dateObj.getFullYear()
+    // get the minute
+    const minute = dateObj.getMinutes()
+    // get the hour
+    const hour = dateObj.getHours()
     // return the date string
-    return `${day} ${date} ${month} ${year}`
+    let str = `${day} ${date} ${month} ${year} ${hour}:${minute}`
+    
+    return str
   }
 
   return (
