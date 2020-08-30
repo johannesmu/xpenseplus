@@ -1,16 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
+import { DateFormat } from './DateFormat'
+
 export const ListItem = ( props ) => {
   
   return (
-    <TouchableOpacity style={itemStyles.item} onPress={()=>{props.handler(props.item)}}>
+    <TouchableOpacity 
+      style={itemStyles.item} 
+      onPress={()=>{props.handler(props.item)}}
+    >
       <View style={itemStyles.row}>
         <Text>
           {props.item.category} 
         </Text>
         <Text>
-          $ {props.amount}
+          $ {props.item.amount}
         </Text>
       </View>
     </TouchableOpacity>

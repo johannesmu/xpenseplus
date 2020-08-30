@@ -1,15 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import {DateFormat} from './DateFormat'
+
 export const DetailPage = (props) => {
   return (
     <View style={detailStyles.detail}>
       <Text style={detailStyles.amount}>$ {props.route.params.amount}</Text>
       <Text style={detailStyles.text}>{props.route.params.note}</Text>
-      <Text>id: {props.route.params.id}</Text>
-      
+      <DateFormat size={10} color='blue' date={props.route.params.id} />
       <Text>category: {props.route.params.category}</Text>
-      
     </View>
   )
 }
@@ -17,7 +17,7 @@ export const DetailPage = (props) => {
 const detailStyles = StyleSheet.create({
   detail: {
     flex: 1,
-    backgroundColor: 'lightblue',
+    backgroundColor: 'lightyellow',
     paddingHorizontal: 15,
     paddingVertical: 10,
   },

@@ -13,49 +13,49 @@ const Data = [
 {
   "amount": 50,
   "category": "food",
-  "id": "1598241633",
+  "id": "1598758753927",
   "note": "buying lunch"
 },
 {
   "amount": 20,
   "category": "transport",
-  "id": "1598241768",
+  "id": "1598758862582",
   "note": "catching train"
 },
 {
   "amount": 80,
   "category": "groceries",
-  "id": "1598241782",
+  "id": "1598758875868",
   "note": "shopping at Coles"
 },
 {
   "amount": 13,
   "category": "food",
-  "id": "1598241795",
+  "id": "1598758889716",
   "note": "snack time"
 },
 {
   "amount": 35,
   "category": "entertainment",
-  "id": "1598241806",
+  "id": "1598758916402",
   "note": "buying Untitled Goose"
 },
 {
   "amount": 350,
   "category": "rent",
-  "id": "1598241817",
+  "id": "1598758904296",
   "note": "weeks rent"
 },
 {
   "amount": 60,
   "category": "transport",
-  "id": "1598241827",
+  "id": "1598758927786",
   "note": "topping up Opal card"
 },
 {
   "amount": 30,
   "category": "food",
-  "id": "1598241841",
+  "id": "1598758937157",
   "note": "buying dinner"
 }
 ]
@@ -71,7 +71,10 @@ export default function App() {
         <Stack.Screen name="Home" >
           {(props) => <HomePage {...props} text="hello home" data={listData} /> }
         </Stack.Screen>
-        <Stack.Screen name="Detail" component={DetailPage} />
+        <Stack.Screen 
+        name="Detail" 
+        component={DetailPage} 
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

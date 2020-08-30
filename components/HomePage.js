@@ -13,7 +13,7 @@ export const HomePage = (props) => {
   }
 
   const renderList = ({item}) =>  (
-    <ListItem id={item.id} amount={item.amount} item={item} handler={handleClick} />
+    <ListItem item={item} handler={handleClick} />
   )
 
   return (
