@@ -77,10 +77,29 @@ const Stack = createStackNavigator();
 export default function App() {
   const [authState,setAuthState] = useState(false) 
   let listData = Data
+
+  const registerHandler = (user) => {
+    firebase.auth().createUserWithEmailAndPassword(user.email,user.password)
+    .catch( (error) => {
+      console.log(error)
+    })
+  }
+
+  firebase.auth().onAuthStateChanged((user)=> {
+    if(user) {
+      console.log('logged in')
+    }
+    else {
+      console.log('not logged in')
+    }
+  })
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Register" component={AuthPage} />
+        <Stack.Screen name="Register">
+          { (props) => <AuthPage {...props} register={registerHandler} /> }
+        </Stack.Screen>
         <Stack.Screen name="Home" >
           {(props) => <HomePage {...props} text="hello home" data={listData} /> }
         </Stack.Screen>

@@ -8,12 +8,15 @@ export const AuthPage = (props) => {
   const [validEmail,setValidEmail] = useState(false)
   const [validPassword,setValidPassword] = useState(false)
 
+  const [email,setEmail] = useState(null)
+  const [password,setPassword] = useState(null)
+
   const navigation = useNavigation()
 
   const validateEmail = (email) => {
     if( email.indexOf('@') > 0 && email.indexOf('.') > 0 ) {
       setValidEmail(true)
-      console.log('yo')
+      setEmail(email)
     }
     else {
       setValidEmail(false)
@@ -23,11 +26,13 @@ export const AuthPage = (props) => {
   const validatePassword = (password) => {
     if( password.length >= 8 ) {
       setValidPassword(true) 
+      setPassword(password)
     }
     else {
       setValidPassword(false)
     }
   }
+
 
   if(login == false ) {
     return (
@@ -51,6 +56,7 @@ export const AuthPage = (props) => {
         <TouchableOpacity 
           style={ !validPassword || !validEmail ? styles.buttonDisabled : styles.button }
           disabled={ !validEmail || !validPassword ? true : false }
+          onPress={ () => { props.register({email: email, password: password }) }}
         >
           <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
