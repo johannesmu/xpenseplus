@@ -1,12 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+// firebase
+import {FirebaseConfig} from './components/FirebaseConfig'
+import * as firebase from 'firebase'
+// // initialise firebase app
+if ( !firebase.app.length ) {
+  firebase.initializeApp( FirebaseConfig )
+}
+
+
+
 // import pages
 import {HomePage} from './components/HomePage';
 import {DetailPage} from './components/DetailPage';
+import {AuthPage} from './components/AuthPage';
 
 
 const Data = [
@@ -64,10 +75,12 @@ const Data = [
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [authState,setAuthState] = useState(false) 
   let listData = Data
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Register" component={AuthPage} />
         <Stack.Screen name="Home" >
           {(props) => <HomePage {...props} text="hello home" data={listData} /> }
         </Stack.Screen>
