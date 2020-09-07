@@ -1,14 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // firebase
 import {FirebaseConfig} from './components/FirebaseConfig'
 import * as firebase from 'firebase'
 // // initialise firebase app
-if ( !firebase.app.length ) {
+if ( !firebase.apps.length ) {
   firebase.initializeApp( FirebaseConfig )
 }
 
@@ -18,6 +18,7 @@ if ( !firebase.app.length ) {
 import {HomePage} from './components/HomePage';
 import {DetailPage} from './components/DetailPage';
 import {AuthPage} from './components/AuthPage';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const Data = [
@@ -74,20 +75,33 @@ const Data = [
 
 const Stack = createStackNavigator();
 
+
 export default function App() {
+  // const navigation = useNavigation()
   const [authState,setAuthState] = useState(false) 
   let listData = Data
 
-  const registerHandler = (user) => {
-    firebase.auth().createUserWithEmailAndPassword(user.email,user.password)
-    .catch( (error) => {
-      console.log(error)
-    })
+  const registerHandler = (intent, user) => {
+    console.log(intent,user)
+    if(intent == "register") {
+      firebase.auth().createUserWithEmailAndPassword(user.email,user.password)
+      .catch( (error) => {
+        console.log(error)
+      })
+    }
+    else {
+      firebase.auth().signInWithEmailAndPassword(user.email,user.password)
+      .catch( (error) => {
+        console.log(error)
+      })
+    }
+    
   }
 
   firebase.auth().onAuthStateChanged((user)=> {
     if(user) {
       console.log('logged in')
+      // navigation.navigate("Home")
     }
     else {
       console.log('not logged in')
@@ -100,12 +114,25 @@ export default function App() {
         <Stack.Screen name="Register">
           { (props) => <AuthPage {...props} register={registerHandler} /> }
         </Stack.Screen>
-        <Stack.Screen name="Home" >
+        <Stack.Screen 
+        name="Home" 
+        options={({navigation,route}) =>({
+          headerTitle:"Expenses",
+          headerRight: () => (
+            <TouchableOpacity onPress={()=>{ 
+              firebase.auth().signOut() 
+              navigation.reset({index:0,routes: [ {name: "Register"} ]})
+              }}>
+              <Text>Log out</Text>
+            </TouchableOpacity>
+          )
+        })}
+        >
           {(props) => <HomePage {...props} text="hello home" data={listData} /> }
         </Stack.Screen>
         <Stack.Screen 
-        name="Detail" 
-        component={DetailPage} 
+          name="Detail" 
+          component={DetailPage} 
         />
       </Stack.Navigator>
     </NavigationContainer>

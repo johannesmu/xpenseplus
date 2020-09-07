@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button } from 'react-native';
-import { useNavigation, useLinkProps } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+
+import * as firebase from 'firebase'
 
 
 export const AuthPage = (props) => {
@@ -12,6 +14,15 @@ export const AuthPage = (props) => {
   const [password,setPassword] = useState(null)
 
   const navigation = useNavigation()
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if(user) {
+      navigation.reset({index:0,routes: [ {name: "Home"} ]})
+    }
+    else {
+      console.log('not logged in')
+    }
+  })
 
   const validateEmail = (email) => {
     if( email.indexOf('@') > 0 && email.indexOf('.') > 0 ) {
@@ -56,7 +67,7 @@ export const AuthPage = (props) => {
         <TouchableOpacity 
           style={ !validPassword || !validEmail ? styles.buttonDisabled : styles.button }
           disabled={ !validEmail || !validPassword ? true : false }
-          onPress={ () => { props.register({email: email, password: password }) }}
+          onPress={ () => { props.register("register", {email: email, password: password }) }}
         >
           <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
@@ -76,12 +87,21 @@ export const AuthPage = (props) => {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Login</Text>
-        <TextInput style={styles.input} placeholder="you@email.com" />
         <TextInput 
-        style={styles.input} 
-        placeholder="your password" 
-        secureTextEntry={true} />
-        <TouchableOpacity style={styles.button}>
+          style={styles.input} 
+          placeholder="you@email.com"
+          onChangeText={ (email) => { setEmail(email)}}
+        />
+        <TextInput 
+          style={styles.input} 
+          placeholder="your password" 
+          secureTextEntry={true} 
+          onChangeText={ (password) => { setPassword(password) } }
+        />
+        <TouchableOpacity 
+        style={styles.button}
+        onPress={ () => { props.register("login", {email: email, password: password }) }}
+        >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <Text style={styles.alternateText}>Don't have an account?</Text>
@@ -96,7 +116,7 @@ export const AuthPage = (props) => {
       </View>
     )
   }
-
+  
 }
 
 const styles = StyleSheet.create({
